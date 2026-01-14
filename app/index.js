@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <div class="box">
-          <h1>🟢 GREEN ENVIRONMENT</h1>
+          <h1>🟢 GREEN ENVIRONMENT THROUGH WEBHOOK</h1>
           <p>Version: v2</p>
           <p>Status: Healthy</p>
         </div>
