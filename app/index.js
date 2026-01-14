@@ -5,29 +5,29 @@ app.get('/', (req, res) => {
   res.send(`
     <html>
       <head>
-        <title>BLUE Environment</title>
+        <title>GREEN Environment</title>
         <style>
           body {
-            background-color: #eff6ff;
+            background-color: #e6fffa;
             font-family: Arial;
             text-align: center;
             padding-top: 100px;
           }
-          h1 { color: #1e3a8a; }
+          h1 { color: #065f46; }
           .box {
             display: inline-block;
             padding: 30px;
-            border: 2px solid #3b82f6;
+            border: 2px solid #10b981;
             border-radius: 10px;
-            background: #dbeafe;
+            background: #d1fae5;
           }
         </style>
       </head>
       <body>
         <div class="box">
-          <h1>🔵 BLUE ENVIRONMENT</h1>
-          <p>Version: v1</p>
-          <p>Status: Stable</p>
+          <h1>🟢 GREEN ENVIRONMENT</h1>
+          <p>Version: v2</p>
+          <p>Status: Healthy</p>
         </div>
       </body>
     </html>
@@ -35,5 +35,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log('BLUE app running on port 3000');
+  console.log('GREEN app running on port 3000');
 });
