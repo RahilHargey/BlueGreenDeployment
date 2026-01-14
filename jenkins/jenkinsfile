@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'TARGET_ENV',
+            choices: ['blue', 'green'],
+            description: 'Select environment to route traffic'
+        )
+    }
+
+    stages {
+
+        stage('Switch Nginx Traffic') {
+            steps {
+                script {
+                    if (params.TARGET_ENV == 'blue') {
+                        sh 'sudo cp /home/ubuntu/blue-green-project/nginx/blue.conf /etc/nginx/conf.d/blue-green.conf'
+                    } else {
+                        sh 'sudo cp /home/ubuntu/blue-green-project/nginx/green.conf /etc/nginx/conf.d/blue-green.conf'
+                    }
+                }
+            }
+        }
+
+        stage('Reload Nginx') {
+            steps {
+                sh 'sudo systemctl reload nginx'
+            }
+        }
+    }
+}
+

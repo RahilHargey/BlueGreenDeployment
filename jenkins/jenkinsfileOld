@@ -1,0 +1,22 @@
+pipeline {
+   agent any
+  
+   stages {
+       stage("BUILD DOCKER IMAGE"){
+	   steps {
+		sh 'docker build -t myapp:latest app'
+           }
+
+       }
+
+       stage("DEPLOY GREEN"){
+	   steps {
+	       sh 'docker stop green || true'
+	       sh 'docker rm green || true'
+	       sh 'docker run -d --name green -p 8082:3000 myapp:latest '
+           }
+       }
+
+   }
+
+} 	
