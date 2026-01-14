@@ -13,7 +13,7 @@ pipeline {
 
         stage('Build Docker Image') {
             when {
-                expression { ACTION_TO_RUN == 'deploy-green' }
+                expression { params.ACTION == 'deploy-green' }
             }
             steps {
                 sh 'docker build -t myapp:latest /home/rahil/blue-green-project/app'
@@ -22,7 +22,7 @@ pipeline {
 
         stage('Deploy Green') {
             when {
-                expression { ACTION_TO_RUN == 'deploy-green' }
+                expression { params.ACTION == 'deploy-green' }
             }
             steps {
                 sh 'docker stop green || true'
@@ -34,13 +34,13 @@ pipeline {
         stage('Switch Nginx Traffic') {
             when {
                 anyOf {
-                    expression { ACTION_TO_RUN == 'switch-blue' }
-                    expression { ACTION_TO_RUN == 'switch-green' }
+                    expression { params.ACTION == 'switch-blue' }
+                    expression { params.ACTION == 'switch-green' }
                 }
             }
             steps {
                 script {
-                    if (ACTION_TO_RUN == 'switch-blue') {
+                    if (params.ACTION == 'switch-blue') {
                         sh 'sudo cp /home/rahil/blue-green-project/nginx/blue.conf /etc/nginx/conf.d/blue-green.conf'
                     } else {
                         sh 'sudo cp /home/rahil/blue-green-project/nginx/green.conf /etc/nginx/conf.d/blue-green.conf'
@@ -52,8 +52,8 @@ pipeline {
         stage('Reload Nginx') {
             when {
                 anyOf {
-                    expression { ACTION_TO_RUN == 'switch-blue' }
-                    expression { ACTION_TO_RUN == 'switch-green' }
+                    expression { params.ACTION == 'switch-blue' }
+                    expression { params.ACTION == 'switch-green' }
                 }
             }
             steps {
